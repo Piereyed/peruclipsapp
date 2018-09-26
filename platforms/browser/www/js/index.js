@@ -65,23 +65,41 @@ var app = {
             $(".relleno").empty();
             $(".relleno").html("Trayendo tags....");
 
-            fetch('https://peruclips.com/api/tags')
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(myJson) {
+            $.ajax({
+                url: "https://peruclips.com/api/tags",
+                type: "GET",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (myJson) {
                     $(".relleno").empty();
-
-                    //            console.log(myJson);
                     for (var i = 0; i < myJson.length; i++){
                         var obj = myJson[i];                
                         $(".relleno").append(tagItemTemplate(obj['id'],obj['name'], obj['en_name']));
 
                     }
-                })
-                .catch(function(error) {
-                    $(".relleno").html("Hubo un problema con la petición Fetch:" + error.message);
-                })
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $(".relleno").html(textStatus + " in pushJsonData: " + errorThrown + " " + jqXHR);
+                }
+            });
+
+            //            fetch('https://peruclips.com/api/tags')
+            //                .then(function(response) {
+            //                    return response.json();
+            //                })
+            //                .then(function(myJson) {
+            //                    $(".relleno").empty();
+            //
+            //                    //            console.log(myJson);
+            //                    for (var i = 0; i < myJson.length; i++){
+            //                        var obj = myJson[i];                
+            //                        $(".relleno").append(tagItemTemplate(obj['id'],obj['name'], obj['en_name']));
+            //
+            //                    }
+            //                })
+            //                .catch(function(error) {
+            //                    $(".relleno").html("Hubo un problema con la petición Fetch:" + error.message);
+            //                });
         });
     }
 };
