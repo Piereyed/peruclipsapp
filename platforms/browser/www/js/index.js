@@ -115,20 +115,19 @@ var app = {
 
 
             if(window.QRScanner){
-                $("#error").html("se detecto el scaner");
+                $("#info").append("se detecto el scaner. ");
                 window.QRScanner.prepare(onDone); // show the prompt
-                $("#error").html("se preparo");
+                $("#info").append("se preparo. ");
 
 
                 // Start a scan. Scanning will continue until something is detected or
                 // `QRScanner.cancelScan()` is called.
                 window.QRScanner.scan(displayContents);
-
-                $("#error").html("se escaneo");
+                $("#info").append("se escaneo. ");
 
                 // Make the webview transparent so the video preview is visible behind it.
                 window.QRScanner.show();
-                $("#error").html("se mostro");
+                $("#info").append("se mostro. ");
                 // Be sure to make any opaque HTML elements transparent here to avoid
                 // covering the video.
             }
@@ -191,11 +190,12 @@ function onDone(err, status){
     if (status.authorized) {
         // W00t, you have camera access and the scanner is initialized.
         // QRscanner.show() should feel very fast.
+        $("#info").html("authorized. ");
     } else if (status.denied) {
         // The video preview will remain black, and scanning is disabled. We can
         // try to ask the user to change their mind, but we'll have to send them
         // to their device settings with `QRScanner.openSettings()`.
-        $("#error").html("denied");
+        $("#info").html("denied. ");
     } else {
         // we didn't get permission, but we didn't get permanently denied. (On
         // Android, a denial isn't permanent unless the user checks the "Don't
@@ -205,6 +205,7 @@ function onDone(err, status){
 
 function displayContents(err, text){
     if(err){
+        $("#error").html(err._message);
         // an error occurred, or the scan was canceled (error code `6`)
     } else {
         // The scan completed, display the contents of the QR code:
