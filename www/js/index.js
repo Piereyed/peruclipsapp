@@ -17,15 +17,15 @@
  * under the License.
  */
 
-function tagItemTemplate(id,name, enname) {
+function tagItemTemplate(name,capital, area) {
     return (
         `<div class="panel panel-default">
 <div class="panel-heading">
 <h3 class="panel-title">${name}</h3>
 </div>
 <div class="panel-body">
-Id: ${id}
-Codigo: ${enname}
+Capital: ${capital} <br>
+Area: ${area}
 </div>
 </div>`
     )
@@ -66,20 +66,19 @@ var app = {
             $(".relleno").html("Trayendo tags....");
 
             $.ajax({
-                url: "https://peruclips.com/api/tags",
+                url: "https://restcountries.eu/rest/v2/all",
                 type: "GET",
-                contentType: "application/json",
                 dataType: "json",
                 success: function (myJson) {
                     $(".relleno").empty();
                     for (var i = 0; i < myJson.length; i++){
                         var obj = myJson[i];                
-                        $(".relleno").append(tagItemTemplate(obj['id'],obj['name'], obj['en_name']));
+                        $(".relleno").append(tagItemTemplate(obj['name'],obj['capital'], obj['area']));
 
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $(".relleno").html(textStatus + " in pushJsonData: " + errorThrown + " " + jqXHR);
+                    $(".relleno").html(textStatus + " in processing: " + errorThrown + " " + jqXHR);
                 }
             });
 
