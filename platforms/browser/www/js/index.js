@@ -101,6 +101,7 @@ var app = {
 
         function displayContents(err, text){
             if(err){
+                navigator.notification.alert("Hubo un error al intentar leer el QR CODE");
                 // an error occurred, or the scan was canceled (error code `6`)
             } else {
                 // The scan completed, display the contents of the QR code:
@@ -114,7 +115,7 @@ var app = {
             if(window.QRScanner){ 
                 console.log("se");
                 //                navigator.vibrate(3000); 
-                window.QRScanner.prepare(onDone); // show the prompt
+//                window.QRScanner.prepare(onDone); // show the prompt
 
                 window.QRScanner.scan(displayContents);
             }
