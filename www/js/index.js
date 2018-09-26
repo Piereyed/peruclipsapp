@@ -51,6 +51,16 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
+
+
+        //        console.log(navigator.vibrate);
+        //        
+        //
+        //        console.log(navigator.notification);
+        //        navigator.notification.alert("Este es una alerta", alertDismissed, 'Bienvenido', 'Entendido');
+        //        function alertDismissed() {
+        //            navigator.vibrate(3000); 
+        //        }
         //        var parentElement = document.getElementById(id);
         //        var listeningElement = parentElement.querySelector('.listening');
         //        var receivedElement = parentElement.querySelector('.received');
@@ -61,9 +71,52 @@ var app = {
         // console.log('Received Event: ' + id);
 
         var btn = document.getElementById("mybtn");
+        var camara = document.getElementById("camara");
+
+        // Show image
+        //
+        function cameraSuccess(imageData) {
+            //            var image = document.getElementById('myImage');
+            //            image.src = "data:image/jpeg;base64," + imageData;
+
+            var image = document.getElementById('myImage');
+            image.src = imageData;
+
+        }
+        function onFail(message) {
+            alert('Failed because: ' + message);
+        }
+        camara.addEventListener('click', function(){
+            console.log(navigator.camera);
+
+            navigator.camera.getPicture(cameraSuccess, onFail, { quality: 50 , 
+                                                                destinationType: Camera.DestinationType.FILE_URI,
+                                                                allowEdit: true,
+                                                                correctOrientation: true,
+                                                                //                                                                saveToPhotoAlbum: true,
+                                                                //                                                                cameraDirection: Camera.Direction.FRONT,
+                                                               });
+
+        });
+
+
+        document.getElementById("qrcode").addEventListener('click', function(){
+            //        window.QRScanner.prepare(onDone); // show the prompt
+
+            if(window.QRScanner){
+                navigator.vibrate(3000); 
+            }
+            else{
+                navigator.vibrate(500); 
+            }
+        });
+
+
         btn.addEventListener('click', function(){
             $(".relleno").empty();
             $(".relleno").html("Trayendo tags....");
+
+
 
             //            $.ajax({
             //                url: "//restcountries.eu/rest/v2/all",
