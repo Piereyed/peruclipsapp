@@ -48,6 +48,9 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+
+                alert(window.QRScanner); 
+           
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -70,51 +73,49 @@ var app = {
 
         // console.log('Received Event: ' + id);
 
-        var btn = document.getElementById("mybtn");
-        var camara = document.getElementById("camara");
+        //        var btn = document.getElementById("mybtn");
+        //        var camara = document.getElementById("camara");
+        //
+        //        function cameraSuccess(imageData) {
+        //            //            var image = document.getElementById('myImage');
+        //            //            image.src = "data:image/jpeg;base64," + imageData;
+        //
+        //            var image = document.getElementById('myImage');
+        //            image.src = imageData;
+        //
+        //        }
+        //        function onFail(message) {
+        //            alert('Failed because: ' + message);
+        //        }
+        //        camara.addEventListener('click', function(){
+        //            navigator.camera.getPicture(cameraSuccess, onFail, { quality: 50 , 
+        //                                                                destinationType: Camera.DestinationType.FILE_URI,
+        //                                                                allowEdit: true,
+        //                                                                correctOrientation: true,
+        //                                                                //                                                                saveToPhotoAlbum: true,
+        //                                                                //                                                                cameraDirection: Camera.Direction.FRONT,
+        //                                                               });
+        //
+        //        });
 
-        function cameraSuccess(imageData) {
-            //            var image = document.getElementById('myImage');
-            //            image.src = "data:image/jpeg;base64," + imageData;
-
-            var image = document.getElementById('myImage');
-            image.src = imageData;
-
-        }
-        function onFail(message) {
-            alert('Failed because: ' + message);
-        }
-        camara.addEventListener('click', function(){
-            navigator.camera.getPicture(cameraSuccess, onFail, { quality: 50 , 
-                                                                destinationType: Camera.DestinationType.FILE_URI,
-                                                                allowEdit: true,
-                                                                correctOrientation: true,
-                                                                //                                                                saveToPhotoAlbum: true,
-                                                                //                                                                cameraDirection: Camera.Direction.FRONT,
-                                                               });
-
-        });
-
-        function displayContents(err, text){
-            if(err){
-                $("#error").html("Hubo un error al intentar leer el QR CODE");
-                navigator.notification.alert("Hubo un error al intentar leer el QR CODE");
-                // an error occurred, or the scan was canceled (error code `6`)
-            } else {
-                // The scan completed, display the contents of the QR code:
-                $("#error").html("The scan completed");
-                alert(text);
-            }
-        }
+//        function displayContents(err, text){
+//            if(err){
+//                $("#error").html("Hubo un error al intentar leer el QR CODE");
+//                navigator.notification.alert("Hubo un error al intentar leer el QR CODE");
+//                // an error occurred, or the scan was canceled (error code `6`)
+//            } else {
+//                // The scan completed, display the contents of the QR code:
+//                $("#error").html("The scan completed");
+//                alert(text);
+//            }
+//        }
 
         document.getElementById("qrcode").addEventListener('click', function(){
 
 
-            if(window.QRScanner){                
-                //                navigator.vibrate(3000); 
-//                window.QRScanner.prepare(onDone); // show the prompt
+            if(window.QRScanner){
 
-                window.QRScanner.scan(displayContents);
+                navigator.vibrate(3000);
             }
             else{
                 $("#error").html("No se encontro el lector de qr");
@@ -123,46 +124,46 @@ var app = {
         });
 
 
-        btn.addEventListener('click', function(){
-            $(".relleno").empty();
-            $(".relleno").html("Trayendo tags....");
-
-
-
-            //            $.ajax({
-            //                url: "//restcountries.eu/rest/v2/all",
-            //                type: "GET",
-            //                dataType: "json",
-            //                success: function (myJson) {
-            //                    $(".relleno").empty();
-            //                    for (var i = 0; i < myJson.length; i++){
-            //                        var obj = myJson[i];                
-            //                        $(".relleno").append(tagItemTemplate(obj['name'],obj['capital'], obj['area']));
-            //                    }
-            //                },
-            //                error: function (jqXHR, textStatus, errorThrown) {
-            //                    console.log(jqXHR);
-            ////                    $(".relleno").html(textStatus + " in processing: " + errorThrown + " " + jqXHR);
-            //                }
-            //            });
-
-            fetch('https://peruclips.com/api/tags')
-                .then(function(response) {
-                return response.json();
-            })
-                .then(function(myJson) {
-                $(".relleno").empty();
-                //            console.log(myJson);
-                for (var i = 0; i < myJson.length; i++){
-                    var obj = myJson[i];                
-                    $(".relleno").append(tagItemTemplate(obj['id'],obj['name'], obj['en_name']));
-
-                }
-            })
-                .catch(function(error) {
-                console.log(error);
-                $(".relleno").html("Hubo un problema con la petición Fetch:" + error.message);
-            });
-        });
+        //        btn.addEventListener('click', function(){
+        //            $(".relleno").empty();
+        //            $(".relleno").html("Trayendo tags....");
+        //
+        //
+        //
+        //            //            $.ajax({
+        //            //                url: "//restcountries.eu/rest/v2/all",
+        //            //                type: "GET",
+        //            //                dataType: "json",
+        //            //                success: function (myJson) {
+        //            //                    $(".relleno").empty();
+        //            //                    for (var i = 0; i < myJson.length; i++){
+        //            //                        var obj = myJson[i];                
+        //            //                        $(".relleno").append(tagItemTemplate(obj['name'],obj['capital'], obj['area']));
+        //            //                    }
+        //            //                },
+        //            //                error: function (jqXHR, textStatus, errorThrown) {
+        //            //                    console.log(jqXHR);
+        //            ////                    $(".relleno").html(textStatus + " in processing: " + errorThrown + " " + jqXHR);
+        //            //                }
+        //            //            });
+        //
+        //            fetch('https://peruclips.com/api/tags')
+        //                .then(function(response) {
+        //                return response.json();
+        //            })
+        //                .then(function(myJson) {
+        //                $(".relleno").empty();
+        //                //            console.log(myJson);
+        //                for (var i = 0; i < myJson.length; i++){
+        //                    var obj = myJson[i];                
+        //                    $(".relleno").append(tagItemTemplate(obj['id'],obj['name'], obj['en_name']));
+        //
+        //                }
+        //            })
+        //                .catch(function(error) {
+        //                console.log(error);
+        //                $(".relleno").html("Hubo un problema con la petición Fetch:" + error.message);
+        //            });
+        //        });
     }
 };
