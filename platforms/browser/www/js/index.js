@@ -99,12 +99,24 @@ var app = {
 
         });
 
+        function displayContents(err, text){
+            if(err){
+                // an error occurred, or the scan was canceled (error code `6`)
+            } else {
+                // The scan completed, display the contents of the QR code:
+                alert(text);
+            }
+        }
 
         document.getElementById("qrcode").addEventListener('click', function(){
-            //        window.QRScanner.prepare(onDone); // show the prompt
 
-            if(window.QRScanner){
-                navigator.vibrate(3000); 
+
+            if(window.QRScanner){ 
+                console.log("se");
+                //                navigator.vibrate(3000); 
+                window.QRScanner.prepare(onDone); // show the prompt
+
+                window.QRScanner.scan(displayContents);
             }
             else{
                 navigator.vibrate(500); 
