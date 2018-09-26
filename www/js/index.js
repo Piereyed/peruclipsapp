@@ -17,15 +17,15 @@
  * under the License.
  */
 
-function tagItemTemplate(name,capital, area) {
+function tagItemTemplate(id,name, ename) {
     return (
         `<div class="panel panel-default">
 <div class="panel-heading">
 <h3 class="panel-title">${name}</h3>
 </div>
 <div class="panel-body">
-Capital: ${capital} <br>
-Area: ${area}
+Codigo: ${id} <br>
+Ingles: ${ename}
 </div>
 </div>`
     )
@@ -82,7 +82,7 @@ var app = {
             //                }
             //            });
 
-            fetch('https://restcountries.eu/rest/v2/all')
+            fetch('https://peruclips.com/api/tags')
                 .then(function(response) {
                 return response.json();
             })
@@ -91,7 +91,7 @@ var app = {
                 //            console.log(myJson);
                 for (var i = 0; i < myJson.length; i++){
                     var obj = myJson[i];                
-                    $(".relleno").append(tagItemTemplate(obj['name'],obj['capital'], obj['area']));
+                    $(".relleno").append(tagItemTemplate(obj['id'],obj['name'], obj['en_name']));
 
                 }
             })
