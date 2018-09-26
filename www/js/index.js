@@ -126,7 +126,7 @@ var app = {
                 $("#info").append("se escaneo. ");
 
                 // Make the webview transparent so the video preview is visible behind it.
-                QRScanner.show();
+                
                 $("#info").append("se mostro. ");
                 // Be sure to make any opaque HTML elements transparent here to avoid
                 // covering the video.
@@ -191,6 +191,7 @@ function onDone(err, status){
         // W00t, you have camera access and the scanner is initialized.
         // QRscanner.show() should feel very fast.
         $("#info").html("authorized. ");
+        QRScanner.show();
     } else if (status.denied) {
         // The video preview will remain black, and scanning is disabled. We can
         // try to ask the user to change their mind, but we'll have to send them
