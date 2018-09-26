@@ -65,40 +65,40 @@ var app = {
             $(".relleno").empty();
             $(".relleno").html("Trayendo tags....");
 
-            $.ajax({
-                url: "https://restcountries.eu/rest/v2/all",
-                type: "GET",
-                dataType: "json",
-                success: function (myJson) {
-                    $(".relleno").empty();
-                    for (var i = 0; i < myJson.length; i++){
-                        var obj = myJson[i];                
-                        $(".relleno").append(tagItemTemplate(obj['name'],obj['capital'], obj['area']));
-
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $(".relleno").html(textStatus + " in processing: " + errorThrown + " " + jqXHR);
-                }
-            });
-
-            //            fetch('https://peruclips.com/api/tags')
-            //                .then(function(response) {
-            //                    return response.json();
-            //                })
-            //                .then(function(myJson) {
+            //            $.ajax({
+            //                url: "//restcountries.eu/rest/v2/all",
+            //                type: "GET",
+            //                dataType: "json",
+            //                success: function (myJson) {
             //                    $(".relleno").empty();
-            //
-            //                    //            console.log(myJson);
             //                    for (var i = 0; i < myJson.length; i++){
             //                        var obj = myJson[i];                
-            //                        $(".relleno").append(tagItemTemplate(obj['id'],obj['name'], obj['en_name']));
-            //
+            //                        $(".relleno").append(tagItemTemplate(obj['name'],obj['capital'], obj['area']));
             //                    }
-            //                })
-            //                .catch(function(error) {
-            //                    $(".relleno").html("Hubo un problema con la petición Fetch:" + error.message);
-            //                });
+            //                },
+            //                error: function (jqXHR, textStatus, errorThrown) {
+            //                    console.log(jqXHR);
+            ////                    $(".relleno").html(textStatus + " in processing: " + errorThrown + " " + jqXHR);
+            //                }
+            //            });
+
+            fetch('https://restcountries.eu/rest/v2/all')
+                .then(function(response) {
+                return response.json();
+            })
+                .then(function(myJson) {
+                $(".relleno").empty();
+                //            console.log(myJson);
+                for (var i = 0; i < myJson.length; i++){
+                    var obj = myJson[i];                
+                    $(".relleno").append(tagItemTemplate(obj['name'],obj['capital'], obj['area']));
+
+                }
+            })
+                .catch(function(error) {
+                console.log(error);
+                $(".relleno").html("Hubo un problema con la petición Fetch:" + error.message);
+            });
         });
     }
 };
