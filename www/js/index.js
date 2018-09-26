@@ -73,8 +73,6 @@ var app = {
         var btn = document.getElementById("mybtn");
         var camara = document.getElementById("camara");
 
-        // Show image
-        //
         function cameraSuccess(imageData) {
             //            var image = document.getElementById('myImage');
             //            image.src = "data:image/jpeg;base64," + imageData;
@@ -87,8 +85,6 @@ var app = {
             alert('Failed because: ' + message);
         }
         camara.addEventListener('click', function(){
-            console.log(navigator.camera);
-
             navigator.camera.getPicture(cameraSuccess, onFail, { quality: 50 , 
                                                                 destinationType: Camera.DestinationType.FILE_URI,
                                                                 allowEdit: true,
@@ -101,10 +97,12 @@ var app = {
 
         function displayContents(err, text){
             if(err){
+                $("#error").html("Hubo un error al intentar leer el QR CODE");
                 navigator.notification.alert("Hubo un error al intentar leer el QR CODE");
                 // an error occurred, or the scan was canceled (error code `6`)
             } else {
                 // The scan completed, display the contents of the QR code:
+                $("#error").html("The scan completed");
                 alert(text);
             }
         }
@@ -112,14 +110,14 @@ var app = {
         document.getElementById("qrcode").addEventListener('click', function(){
 
 
-            if(window.QRScanner){ 
-                console.log("se");
+            if(window.QRScanner){                
                 //                navigator.vibrate(3000); 
 //                window.QRScanner.prepare(onDone); // show the prompt
 
                 window.QRScanner.scan(displayContents);
             }
             else{
+                $("#error").html("No se encontro el lector de qr");
                 navigator.vibrate(500); 
             }
         });
