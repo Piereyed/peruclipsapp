@@ -114,19 +114,19 @@ var app = {
         document.getElementById("qrcode").addEventListener('click', function(){
 
 
-            if(window.QRScanner){
+            if(QRScanner){
                 $("#info").append("se detecto el scaner. ");
-                window.QRScanner.prepare(onDone); // show the prompt
+                QRScanner.prepare(onDone); // show the prompt
                 $("#info").append("se preparo. ");
 
 
                 // Start a scan. Scanning will continue until something is detected or
                 // `QRScanner.cancelScan()` is called.
-                window.QRScanner.scan(displayContents);
+                QRScanner.scan(displayContents);
                 $("#info").append("se escaneo. ");
 
                 // Make the webview transparent so the video preview is visible behind it.
-                window.QRScanner.show();
+                QRScanner.show();
                 $("#info").append("se mostro. ");
                 // Be sure to make any opaque HTML elements transparent here to avoid
                 // covering the video.
