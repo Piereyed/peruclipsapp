@@ -116,18 +116,29 @@ var app = {
 
             if(QRScanner){
                 $("#info").append("se detecto el scaner. ");
-                QRScanner.prepare(onDone); // show the prompt
-                $("#info").append("se preparo. ");
 
+                var done = function(err, status){
+                    if(err){
+                        $("#error").append(err._message);
+                    } else {
+                        $("#info").append('QRScanner is initialized. Status: '+ status);
+                    }
+                };
 
-                // Start a scan. Scanning will continue until something is detected or
-                // `QRScanner.cancelScan()` is called.
-                QRScanner.scan(displayContents);
-                $("#info").append("se escaneo. ");
+                QRScanner.prepare(done);
+
+                var scancallback = function(err, contents){
+                    if(err){
+                        $("#error").append(err._message);
+                    }
+                    alert('The QR Code contains: ' + contents);
+                };
+
+                QRScanner.scan(scancallback);
 
                 // Make the webview transparent so the video preview is visible behind it.
-                
-                $("#info").append("se mostro. ");
+                QRScanner.show();
+                $("#info").append("se mostro transparente ");
                 // Be sure to make any opaque HTML elements transparent here to avoid
                 // covering the video.
             }
@@ -181,35 +192,35 @@ var app = {
         //        });
     }
 };
-
-function onDone(err, status){
-    if (err) {
-        // here we can handle errors and clean up any loose ends.
-        $("#error").html(err);
-    }
-    if (status.authorized) {
-        // W00t, you have camera access and the scanner is initialized.
-        // QRscanner.show() should feel very fast.
-        $("#info").html("authorized. ");
-        QRScanner.show();
-    } else if (status.denied) {
-        // The video preview will remain black, and scanning is disabled. We can
-        // try to ask the user to change their mind, but we'll have to send them
-        // to their device settings with `QRScanner.openSettings()`.
-        $("#info").html("denied. ");
-    } else {
-        // we didn't get permission, but we didn't get permanently denied. (On
-        // Android, a denial isn't permanent unless the user checks the "Don't
-        // ask again" box.) We can ask again at the next relevant opportunity.
-    }
-}
-
-function displayContents(err, text){
-    if(err){
-        $("#error").html(err._message);
-        // an error occurred, or the scan was canceled (error code `6`)
-    } else {
-        // The scan completed, display the contents of the QR code:
-        alert(text);
-    }
-}
+//
+//function onDone(err, status){
+//    if (err) {
+//        // here we can handle errors and clean up any loose ends.
+//        $("#error").html(err);
+//    }
+//    if (status.authorized) {
+//        // W00t, you have camera access and the scanner is initialized.
+//        // QRscanner.show() should feel very fast.
+//        $("#info").html("authorized. ");
+//        QRScanner.show();
+//    } else if (status.denied) {
+//        // The video preview will remain black, and scanning is disabled. We can
+//        // try to ask the user to change their mind, but we'll have to send them
+//        // to their device settings with `QRScanner.openSettings()`.
+//        $("#info").html("denied. ");
+//    } else {
+//        // we didn't get permission, but we didn't get permanently denied. (On
+//        // Android, a denial isn't permanent unless the user checks the "Don't
+//        // ask again" box.) We can ask again at the next relevant opportunity.
+//    }
+//}
+//
+//function displayContents(err, text){
+//    if(err){
+//        $("#error").html(err._message);
+//        // an error occurred, or the scan was canceled (error code `6`)
+//    } else {
+//        // The scan completed, display the contents of the QR code:
+//        alert(text);
+//    }
+//}
